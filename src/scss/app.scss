@@ -1,0 +1,127 @@
+@import './fonts.scss';
+@import './nullstyle.scss';
+
+$ff: 'Roboto', sans-serif;
+$fs: 1.2rem;
+$fw: 500;
+$grey: #989898;
+$black: #000;
+$white: #fff;
+$darkPurple: #514EF3;
+
+@mixin flexCenter ($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba($grey, 0.3);
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-family: $ff;
+  font-size: $fs;
+  font-weight: $fw;
+  color: $black;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;  
+}
+
+.root{
+  min-height: 100%;
+  max-width: 1200px;
+  padding: 0 1.25rem;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.polling {
+  &__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem 0;
+    max-width: 800px;
+    padding: 2rem;
+    margin: 0 auto;
+  }
+  &__title {
+    font-size: 1.3rem;
+  }
+  // .polling__messages
+  &__messages {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem 0;
+    padding: 1.4rem;
+    border: 1px solid $grey;
+    border-radius: 0.4rem;
+    // box-shadow: 2px 2px 4px 0px rgba($grey, 0.7);
+  }
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 0 0.5rem 0;
+  border-bottom: 1px solid rgba($grey, 0.3);
+  // .message__state
+  &__state {
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #3B82F7;
+  }
+  // .message__content
+  &__content {
+    // font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  // .message__email
+  &__email {
+    font-weight: 600;
+    position: relative;
+    padding: 0 0 0 16px;
+    &::before{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #3B82F7;
+    }
+  }
+  // .message__date
+  &__date {
+    color: $grey;
+  }
+  // .message__subject
+  &__subject {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  // .message__text
+  &__text {
+    font-size: 0.8rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+

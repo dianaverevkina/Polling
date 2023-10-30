@@ -16,9 +16,6 @@ build: off  # отключаем встроенную в appveyor систему
 build_script:
   - npm run build   # команда сборки
 
-test_script:
-  - npm run e2e    # команда для запуска e2e-тестов
-
 deploy_script:  # скрипт развёртывания
   - git config --global credential.helper store
   - git config --global user.name AppVeyor

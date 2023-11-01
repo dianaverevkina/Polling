@@ -18,6 +18,7 @@ export default class Polling {
     this.messagesContainer = this.container.querySelector('.polling__messages');
   }
 
+  // Подписываемся на новые сообщения
   subscribeOnNewMessages() {
     const interval$ = interval(5000);
     interval$.subscribe(() => {
@@ -35,10 +36,12 @@ export default class Polling {
     });
   }
 
+  // Сортируем сообщения
   sortMessages(messages) {
     return messages.sort((a, b) => Date.parse(a.recieved) - Date.parse(b.recieved));
   }
 
+  // Создаем сообщения
   renderMessages(messages) {
     messages.forEach((message) => {
       this.messagesList = [...this.messagesContainer.querySelectorAll('.message')];
@@ -50,6 +53,7 @@ export default class Polling {
     });
   }
 
+  // Рендерим сообщение
   renderItem({
     id, from, subject, recieved, body,
   }) {
@@ -57,7 +61,6 @@ export default class Polling {
     const message = document.createElement('div');
     message.classList.add('message');
     message.dataset.id = id;
-    // message.setAttribute('data-id', id);
     message.innerHTML = `
       <div class="message__content">
         <p class="message__email">${from}</p>

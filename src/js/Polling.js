@@ -1,10 +1,11 @@
 import { interval, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
-import { catchError } from 'rxjs/operators';
+import { catchError, concatMap } from 'rxjs/operators';
 
 export default class Polling {
   constructor() {
     this.container = null;
+    this.subscription = null;
   }
 
   init() {
@@ -14,25 +15,22 @@ export default class Polling {
 
   bindToDOM() {
     this.container = document.querySelector('.polling__container');
-
     this.messagesContainer = this.container.querySelector('.polling__messages');
   }
 
   // Подписываемся на новые сообщения
   subscribeOnNewMessages() {
-    const interval$ = interval(5000);
-    interval$.subscribe(() => {
-      ajax.getJSON('http://localhost:3000/messages/unread').pipe(
-        catchError((error) => {
-          console.error(error);
-          return of({ messages: [] });
-        }),
-      ).subscribe((response) => {
-        if (response.status !== 'ok') return;
+    if (this.subscription) return;
 
-        const sortedMessages = this.sortMessages(response.messages);
-        this.renderMessages(sortedMessages);
-      });
+    const interval$ = interval(5000);
+    this.subscription = interval$.pipe(
+      concatMap(() => ajax.getJSON('http://localhost:3000/messages/unread')),
+      catchError(() => of({ messages: [] })),
+    ).subscribe((response) => {
+      if (response.status !== 'ok') return;
+
+      const sortedMessages = this.sortMessages(response.messages);
+      this.renderMessages(sortedMessages);
     });
   }
 
